@@ -26,6 +26,10 @@ const CreatePost = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
       console.log(response.data);
       toast.success("Post created successfully");
     } catch (error) {

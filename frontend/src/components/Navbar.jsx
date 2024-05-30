@@ -33,7 +33,7 @@ function Navbar() {
         <a href="/">Home</a>
       </li>
       <li>
-        <a>Contact</a>
+        <a href="/Feed">Feed</a>
       </li>
       <li>
         <a>About</a>

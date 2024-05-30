@@ -5,15 +5,14 @@ import User from '../model/user.model.js';
 export const viewPost = async (req, res) => {
     console.log("Request body:", req.body);
     try {
-        const { postID } = req.body;
-        const post = await Post.findOne({ _id: postID });
+        const { post } = req.body;
 
         if (!post) {
             console.log("Post not found!");
-            return res.status(400).json({ message: "Invalid post ID" });
+            return res.status(400).json({ message: "Invalid post" });
         }
 
-        const user = await User.findOne({ _id: post._author });
+        const user = await User.findOne({ _id: post.author });
 
         if (!user) {
             console.log("User not found who has created this post!!");
@@ -25,7 +24,6 @@ export const viewPost = async (req, res) => {
         res.status(200).json({
             message: "Here is the post and user data who made the post",
             user: user,
-            post: post,
         });
     } catch (error) {
         console.log("Error: " + error.message);
@@ -36,8 +34,8 @@ export const viewPost = async (req, res) => {
 export const viewComment= async (req, res) => {
     console.log("Request body:", req.body);
     try {
-        const {comment} = req.body;
-
+        const {comment}=req.body;
+        
         const user = await User.findOne({ _id: comment.author});
 
         if (!user) {
@@ -56,3 +54,36 @@ export const viewComment= async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+export const saveComment = async (req, res) => {
+    try {
+        const { post, commentData, selfUserId } = req.body;
+
+        // Check if required data is provided
+        if (!post || !commentData || !selfUserId) {
+            return res.status(400).json({ message: "Missing required data" });
+        }
+
+        const commentedPost=await Post.findOne({ _id:post._id});
+        // Create a new comment based on the commentSchema
+        const newComment = {
+            author: selfUserId, // Assign the author of the comment
+            text: commentData.text // Assign the text of the comment
+        };
+
+        // Push the new comment into the post's comments array
+        commentedPost.comments.push(newComment);
+        
+        // Save the post with the new comment
+        await commentedPost.save();
+
+        // Return the saved comment in the response
+        res.status(200).json({ message: "Comment saved", comment: newComment });
+    } catch (error) {
+        console.error("Error: " + error.message);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+

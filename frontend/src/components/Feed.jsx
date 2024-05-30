@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import ViewPost from './ViewPost';
 
-const SelfFeed = () => {
+const Feed = () => {
   const [posts, setPosts] = useState([]);
-  const selfUser = JSON.parse(localStorage.getItem("selfUser"));
+  const [selfUser, setSelfUser] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.post('http://localhost:4001/post/getUserPosts', { userId: selfUser._id });
-        setPosts(response.data.posts);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
+    const user = JSON.parse(localStorage.getItem("selfUser"));
+    setSelfUser(user);
+  }, []);
 
-    if (selfUser) {
-      fetchPosts();
+  const fetchPosts = useCallback(async () => {
+    try {
+      if (selfUser) {
+        const response = await axios.post('http://localhost:4001/post/getAllPosts', { userId: selfUser._id });
+        setPosts(response.data.posts);
+        console.log("posts are: ",posts);
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
     }
   }, [selfUser]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
   const navigate = useNavigate();
   const handlePostClick = (post) => {
     navigate('/ViewPost', { state: { post } });
@@ -41,4 +47,4 @@ const SelfFeed = () => {
   );
 };
 
-export default SelfFeed;
+export default Feed;

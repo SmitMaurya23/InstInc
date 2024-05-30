@@ -87,11 +87,11 @@ export const login = async (req, res) => {
 export const showData = async (req, res) => {
     console.log("Request body:", req.body);
     try {
-        const { userID } = req.body;
+        const { userId } = req.body;
 
-        const user = await User.findOne({ _id: userID }); // Corrected to query by _id
+        const user = await User.findOne({ _id: userId}); // Corrected to query by _id
         if (!user) {
-            console.log("User not found with userID", userID);
+            console.log("User not found with userID", userId);
             return res.status(400).json({ message: "Invalid userID" });
         }
 

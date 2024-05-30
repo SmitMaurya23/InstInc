@@ -9,6 +9,9 @@ import { useAuth } from "./context/AuthProvider";
 import ShowUser from "./components/ShowUser";
 import EditProfile from "./components/EditProfile";
 import ViewPost from "./components/ViewPost";
+import Feed from "./components/Feed"
+import OtherProfile from "./components/OtherProfile";
+import OtherFeed from "./components/OtherFeed";
 
 function App() {
   const [authUser] = useAuth();
@@ -25,7 +28,11 @@ function App() {
       <Route path="/CreatePost" element={<CreatePost />} />
       <Route path="/ShowUser" element={<ShowUser />} />
       <Route path="/EditProfile" element={<EditProfile />} />
-      <Route path="/ViewPost/:postID" element={<ViewPost />} />
+      <Route path="/ViewPost" element={<ViewPost />} />
+      <Route path="/Feed" element={<Feed />} />
+      <Route path="/OtherProfile" element={<OtherProfile />} />
+      <Route path="/OtherFeed" element={<OtherFeed />} />
+
     </Routes>
     <Toaster />
   </div>

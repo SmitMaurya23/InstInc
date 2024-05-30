@@ -100,3 +100,28 @@ export const getUserPosts = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+export const getAllPosts = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    let userPosts;
+    if (userId) {
+      // If userId exists, retrieve all posts except those where the author is equal to userId
+      userPosts = await Post.find({ author: { $ne: userId } });
+    } else {
+      // If userId doesn't exist, retrieve all posts
+      userPosts = await Post.find();
+    }
+
+    // Randomize the order of the retrieved posts
+    userPosts = userPosts.sort(() => Math.random() - 0.5);
+    console.log("userPosts: ",userPosts);
+
+    res.status(200).json({ posts: userPosts });
+  } catch (error) {
+    console.error('Error fetching user posts:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

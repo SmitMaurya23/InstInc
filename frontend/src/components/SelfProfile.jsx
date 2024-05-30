@@ -9,24 +9,11 @@ import SelfFeed from "./SelfFeed";
 import { Link } from "react-router-dom";
 
 function SelfProfile() {
-  const [username, setUsername] = useState(null);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [profilePic, setProfilePic] = useState(null);
+
   const [isModalVisible1, setIsModalVisible1] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
+  const selfUser = JSON.parse(localStorage.getItem("selfUser"));
 
-
-  useEffect(() => {
-    const user = localStorage.getItem('selfUser');
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setUsername(parsedUser.username);
-      setName(parsedUser.name);
-      setEmail(parsedUser.email);
-      setProfilePic(parsedUser.profileImage);
-    }
-  }, []);
 
   const handleOpenModalCreatePost = () => {
     setIsModalVisible1(true);
@@ -56,7 +43,7 @@ function SelfProfile() {
 
               <div>
               <div>
-                <img src={profilePic} alt="Profile" className="w-20 h-20 md:w-40 md:h-40 rounded-full border-4 border-white hover:border-primary transition duration-300" />
+                <img src={selfUser.profileImage} alt="Profile" className="w-20 h-20 md:w-40 md:h-40 rounded-full border-4 border-white hover:border-primary transition duration-300" />
               </div>
 
               <div className="stats shadow">
@@ -94,18 +81,18 @@ function SelfProfile() {
 
               <div>
 
-                <div className="card-actions mt-4 mb-10 flex flex-col md:flex-row justify-around">
+                <div className="card-actions mt-4 mb-10 flex flex-col md:flex-row justify-around ">
                   <div>
                     <h3 className="font-bold">Name:</h3>
-                    <p>{name}</p>
+                    <p>{selfUser.name}</p>
                   </div>
                   <div>
                     <h3 className="font-bold">Username:</h3>
-                    <p>{username}</p>
+                    <p>{selfUser.username}</p>
                   </div>
                   <div>
                     <h3 className="font-bold">Email:</h3>
-                    <p>{email}</p>
+                    <p>{selfUser.email}</p>
                   </div>
                 </div>
 
@@ -125,7 +112,7 @@ function SelfProfile() {
         <SelfFeed />
         <Footer />
       </div>
-      <CreatePostModal isVisible={isModalVisible1} onClose={handleCloseModalCreatePost} userId={username} />
+      <CreatePostModal isVisible={isModalVisible1} onClose={handleCloseModalCreatePost} userId={selfUser.username} />
       <EditProfileModal isVisible={isModalVisible2} onClose={handleCloseModalEditProfile} />
     </>
   );
