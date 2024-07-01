@@ -9,16 +9,18 @@
         "start": "node index.js",
         "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
     },
+
+    
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/akhil2k-lc/bookStoreApp.git"
+        "url": "https://github.com/SmitMaurya23/InstInc.git"
     },
-    "author": "Akhil",
+    "author": "Smit",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/akhil2k-lc/bookStoreApp/issues"
+        "url": "https://github.com/SmitMaurya23/InstInc.git/issues"
     },
-    "homepage": "https://github.com/akhil2k-lc/bookStoreApp#readme",
+    "homepage": "https://github.com/SmitMaurya23/InstInc#readme",
     "dependencies": {
         "aws-sdk": "^2.1628.0",
         "bcryptjs": "^2.4.3",
