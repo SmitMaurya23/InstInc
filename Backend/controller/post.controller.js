@@ -53,12 +53,14 @@ export const createPost = async (req, res) => {
   try {
     const { description, author } = req.body;
     if (!description || !author) {
+      console.error('Description and author are required');
       return res.status(400).json({ message: 'Description and author are required' });
     }
 
     console.log("req.file is: ", req.file);
 
     if (!req.file) {
+      console.error('File is required');
       return res.status(400).json({ message: 'File is required' });
     }
 
@@ -66,6 +68,7 @@ export const createPost = async (req, res) => {
     const filePath = path.resolve(req.file.path);
     console.log("Checking if file exists at:", filePath);
     if (!fs.existsSync(filePath)) {
+      console.error('File does not exist at:', filePath);
       return res.status(400).json({ message: 'File does not exist' });
     }
 
@@ -73,6 +76,7 @@ export const createPost = async (req, res) => {
     const result = await uploadOnCloudinary(filePath);
 
     if (!result) {
+      console.error('Error uploading image to Cloudinary');
       return res.status(500).json({ message: 'Error uploading image to Cloudinary' });
     }
 
@@ -96,6 +100,7 @@ export const createPost = async (req, res) => {
     });
   } catch (error) {
     console.error('Error:', error.message);
+    console.error('Full error:', error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
