@@ -26,7 +26,8 @@ const uploadOnCloudinary = async (localFilePath) => {
     return response;
   } catch (error) {
     // Handle error
-    console.error("Error uploading file:", error);
+    console.error("Error uploading file:", error.message);
+    console.error("Full error:", error);
     // Attempt to remove the locally saved temporary file if the upload operation failed
     try {
       fs.unlinkSync(localFilePath);
@@ -47,6 +48,11 @@ export const createPost = async (req, res) => {
     }
 
     console.log("req.file is: ", req.file);
+
+    // Ensure file is present
+    if (!req.file) {
+      return res.status(400).json({ message: 'File is required' });
+    }
 
     // Upload image to Cloudinary
     console.log("cloudinary: ", cloudinary);
@@ -71,8 +77,8 @@ export const createPost = async (req, res) => {
 
     await newPost.save();
 
-    const user = await User.findOne({ _id: author});
-    console.log("Our user is: ",user);
+    const user = await User.findOne({ _id: author });
+    console.log("Our user is: ", user);
     user.posts.push(newPost._id);
     await user.save();
 
