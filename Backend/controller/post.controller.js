@@ -20,9 +20,18 @@ const uploadOnCloudinary = async (localFilePath) => {
       folder: 'uploads',
       public_id: publicId, // Use the generated unique file name
     });
-    
+
     // File uploaded successfully
     console.log("File uploaded successfully", response.url);
+
+    // Remove the local file after successful upload
+    try {
+      fs.unlinkSync(localFilePath);
+      console.log("Local file removed successfully");
+    } catch (unlinkError) {
+      console.error("Error removing local file:", unlinkError);
+    }
+
     return response;
   } catch (error) {
     // Handle error
@@ -49,19 +58,18 @@ export const createPost = async (req, res) => {
 
     console.log("req.file is: ", req.file);
 
-    // Ensure file is present
     if (!req.file) {
       return res.status(400).json({ message: 'File is required' });
     }
 
+    // Ensure the file exists before upload
+    const filePath = path.resolve(req.file.path);
+    if (!fs.existsSync(filePath)) {
+      return res.status(400).json({ message: 'File does not exist' });
+    }
+
     // Upload image to Cloudinary
-    console.log("cloudinary: ", cloudinary);
-    console.log("cloudinary.uploader is: ", cloudinary.uploader);
-    console.log("req.file.path: ", req.file.path);
-
-    const result = await uploadOnCloudinary(req.file.path);
-
-    console.log("result is: ", result);
+    const result = await uploadOnCloudinary(filePath);
 
     if (!result) {
       return res.status(500).json({ message: 'Error uploading image to Cloudinary' });
@@ -78,7 +86,6 @@ export const createPost = async (req, res) => {
     await newPost.save();
 
     const user = await User.findOne({ _id: author });
-    console.log("Our user is: ", user);
     user.posts.push(newPost._id);
     await user.save();
 
@@ -91,6 +98,7 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
+
 
 export const getUserPosts = async (req, res) => {
   try {
