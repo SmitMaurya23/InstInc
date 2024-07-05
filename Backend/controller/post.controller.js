@@ -64,6 +64,7 @@ export const createPost = async (req, res) => {
 
     // Ensure the file exists before upload
     const filePath = path.resolve(req.file.path);
+    console.log("Checking if file exists at:", filePath);
     if (!fs.existsSync(filePath)) {
       return res.status(400).json({ message: 'File does not exist' });
     }
@@ -98,7 +99,6 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
-
 
 export const getUserPosts = async (req, res) => {
   try {
