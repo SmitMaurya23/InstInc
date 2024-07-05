@@ -105,6 +105,7 @@ export const createPost = async (req, res) => {
   }
 };
 
+
 export const getUserPosts = async (req, res) => {
   try {
     // Assuming the user ID is passed in the request body
