@@ -2,6 +2,9 @@ live website: https://instinc.onrender.com
 
 Inst'Inc - Full-Stack Social Media Platform
 
+Description  
+Inst'Inc is a full-stack social media platform developed using the MERN stack (MongoDB, Express.js, React.js, Node.js). This platform allows users to create profiles, post images, view feeds, comment on posts, search for other users, and communicate through a chat feature. The application ensures secure user access through authentication mechanisms involving sessions, web sockets, cookies, and JWT.  
+
 Features  
 User Profiles: Create and manage personal profiles.  
 Image Posting: Upload and share images with other users.  
