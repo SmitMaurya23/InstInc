@@ -26,7 +26,7 @@ MongoDB and Cloudinary accounts for database and image storage.
 Steps----
 
 Clone the repository:
-git clone https://github.com/your-username/InstInc.git
+git clone https://github.com/SmitMaurya23/InstInc.git  
 
 Navigate to the InstInc folder:
 cd InstInc
