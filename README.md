@@ -47,7 +47,7 @@ Start the server:
 npm start
 
 Access the application:
-Open your web browser and navigate to http://localhost:4000.
+Open your web browser and navigate to http://localhost:4001.
 
 Configuration
 Update the credentials for MongoDB and Cloudinary in the appropriate configuration files.
