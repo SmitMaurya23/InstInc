@@ -112,10 +112,18 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <a></a>
                 </li>
                 <li>
-                  <Logout />
+                {!authUser ? (
+              <div className="">
+                <button onClick={handleOpenModalLogin} className="btn btn-secondary">
+                  Login
+                </button>
+              </div>
+            ) : (
+              <Logout />
+            )}
                 </li>
               </ul>
             </div>
