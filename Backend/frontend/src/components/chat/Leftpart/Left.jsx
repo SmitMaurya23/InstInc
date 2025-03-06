@@ -4,12 +4,14 @@ import Users from "./Users";
 
 function Left() {
   return (
-    <div className="w-full   bg-black text-gray-300">
-      <Search />
-      <div
-        className=" flex-1  overflow-y-auto"
-        style={{ minHeight: "calc(84vh - 10vh)" }}
-      >
+    <div className="w-full h-full flex flex-col overflow-hidden">
+      {/* Fixed-height Search Section */}
+      <div className="p-4 border-b border-base-300">
+        <Search />
+      </div>
+      
+      {/* Scrollable Users List */}
+      <div className="flex-1">
         <Users />
       </div>
     </div>

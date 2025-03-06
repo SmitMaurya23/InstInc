@@ -163,52 +163,47 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
   };
 
-export const editProfile = async (req, res) => {
+  export const editProfile = async (req, res) => {
     console.log("Request received for editing Profile");
-    console.log("req.body is: ", req.body);
     try {
-      const { userID,name,username} = req.body;
-      if (!userID ) {
-        return res.status(400).json({ message: 'User is not found!!!' });
-      }
-  
-      console.log("req.file is: ", req.file);
-  
-      // Upload image to Cloudinary
-      console.log("cloudinary: ", cloudinary);
-      console.log("cloudinary.uploader is: ", cloudinary.uploader);
-      console.log("req.file.path: ", req.file.path);
-  
-      const result = await uploadOnCloudinary(req.file.path);
-  
-      console.log("result is: ", result);
-  
-      if (!result) {
-        return res.status(500).json({ message: 'Error uploading image to Cloudinary' });
-      }
-  
-      // Save the public URL (secure_url) in the database
-  
-      const user = await User.findOne({ _id: userID});
-      console.log("Our user is: ",user);
-      user.name=name;
-      user.username=username;
-      user.profileImage=result.secure_url;
-      await user.save();
-      
-      const updatedUser=await User.findOne({ _id: userID});
+        const { userID, name, username } = req.body;
+        
+        if (!userID) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
 
-      console.log("Our updated user is: ",user);
-      res.status(201).json({
-        message: 'Profile Updated successfully',
-        user: updatedUser,
-      });
+        const user = await User.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update image only if new file is uploaded
+        if (req.file) {
+            const result = await uploadOnCloudinary(req.file.path);
+            if (!result) {
+                return res.status(500).json({ message: 'Error uploading image to Cloudinary' });
+            }
+            user.profileImage = result.secure_url;
+        }
+
+        // Update name and username only if provided
+        if (name) user.name = name;
+        if (username) user.username = username;
+
+        await user.save();
+
+        res.status(200).json({
+            message: 'Profile updated successfully',
+            user: user
+        });
     } catch (error) {
-      console.error('Error:', error.message);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+        console.error('Error:', error.message);
+        res.status(500).json({ 
+            message: 'Internal server error', 
+            error: error.message 
+        });
     }
-  };
-  
+};
 
   export const searchUsers = async (req, res) => {
     const { query } = req.query;

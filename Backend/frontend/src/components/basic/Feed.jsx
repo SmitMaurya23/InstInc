@@ -34,17 +34,50 @@ const Feed = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="grid grid-cols-4 gap-6 my-10 mx-10 mt-30" style={{ marginTop: '100px' }}>
-        {posts.map(post => (
-          <div key={post._id} className="relative aspect-w-1 aspect-h-1">
-            <div onClick={() => handlePostClick(post)} style={{ cursor: 'pointer' }}>
-              <img src={post.image} alt={`Post ${post._id}`} className="object-cover w-full h-full" />
-            </div>
+      
+      <main className="flex-1">
+        <div className="container mx-auto px-4 md:px-10 py-6" style={{ marginTop: '100px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {posts.map(post => (
+              <div 
+                key={post._id} 
+                className="group relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+              >
+                <div 
+                  onClick={() => handlePostClick(post)} 
+                  className="cursor-pointer"
+                >
+                  <img 
+                    src={post.image} 
+                    alt={`Post ${post._id}`} 
+                    className="w-full h-48 md:h-60 object-cover transform transition-transform duration-200 group-hover:scale-105" 
+                  />
+                  {/* Add caption overlay for mobile */}
+                  <div className="md:hidden absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+                    {post.caption && (
+                      <p className="text-white text-sm line-clamp-2">
+                        {post.caption}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Desktop caption */}
+                {post.caption && (
+                  <div className="hidden md:block p-3">
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {post.caption}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </main>
+
       <Footer />
     </div>
   );
