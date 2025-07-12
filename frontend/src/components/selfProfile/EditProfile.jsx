@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FiUploadCloud, FiX, FiLoader } from 'react-icons/fi';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const EditProfile = ({ onClose }) => {
   const { register, handleSubmit } = useForm();
@@ -35,7 +36,7 @@ const EditProfile = ({ onClose }) => {
       formData.append('username', data.username || selfUser.username);
       formData.append('userID', selfUser._id);
 
-      const response = await axios.post("/api/user/editProfile", formData, {
+      const response = await axios.post(`${API_BASE_URL}/user/editProfile`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

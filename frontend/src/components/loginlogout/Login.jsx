@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthProvider";
 import { FiAlertCircle } from "react-icons/fi";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const Login = ({ onClose }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,7 +20,7 @@ const Login = ({ onClose }) => {
     };
     
     await axios
-      .post("/api/user/login", userInfo)
+      .post(`${API_BASE_URL}/user/login`, userInfo)
       .then((res) => {
         if (res.data) {
           toast.success("Logged in Successfully");

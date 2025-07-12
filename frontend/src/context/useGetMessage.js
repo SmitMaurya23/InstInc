@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useConversation from "../../zustand/useConversation.js";
 import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
+
 const useGetMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessage, selectedConversation } = useConversation();
@@ -12,7 +15,7 @@ const useGetMessage = () => {
 
        try {
           const res = await axios.get(
-            `/api/message/get/${selectedConversation._id}`
+            `${API_BASE_URL}/message/get/${selectedConversation._id}`
           );
           console.log("res is: ",res);
           setMessage(res.data);

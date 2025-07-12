@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const SelfFeed = () => {
   const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ const SelfFeed = () => {
     const fetchPosts = async () => {
       try {
         if (selfUser) {
-          const response = await axios.post('/api/post/getUserPosts', { userId: selfUser._id });
+          const response = await axios.post(`${API_BASE_URL}/post/getUserPosts`, { userId: selfUser._id });
           setPosts(response.data.posts);
         }
       } catch (error) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 function ViewComment({ comment }) {
   const [commentUser, setCommentUser] = useState(null);
@@ -15,7 +16,7 @@ function ViewComment({ comment }) {
         return;
       }
       try {
-        const response = await axios.post("/api/post/viewComment", { comment });
+        const response = await axios.post(`${API_BASE_URL}/post/viewComment`, { comment });
         console.log("commentUser is: ", response.data.user);
         setCommentUser(response.data.user);
       } catch (error) {

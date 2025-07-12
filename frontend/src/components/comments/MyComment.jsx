@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const MyComment = ({ post }) => {
   const selfUser = JSON.parse(localStorage.getItem("selfUser"));
@@ -21,7 +22,7 @@ const MyComment = ({ post }) => {
 
     try {
       // Send comment data to backend
-      const response = await axios.post('/api/post/saveComment', {
+      const response = await axios.post(`${API_BASE_URL}/post/saveComment`, {
         post: post,
         commentData: { text: comment }, // Assuming commentData requires text property
         selfUserId: selfUser._id,

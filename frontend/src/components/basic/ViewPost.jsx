@@ -9,6 +9,7 @@ import MyComment from '../comments/MyComment';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import LikeButton from '../comments/LikeButton';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const ViewPost = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const ViewPost = () => {
         return;
       }
       try {
-        const responseUser = await axios.post("/api/post/viewPost", { post });
+        const responseUser = await axios.post(`${API_BASE_URL}/post/viewPost`, { post });
         setPostUser(responseUser.data.user);
       } catch (error) {
         console.error('Error fetching user data:', error);

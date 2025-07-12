@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 4001;
 const URI = process.env.MongoDBURI;
 
 // Middleware
-app.use(cors({ origin: ["http://localhost:3001","https://instinc.onrender.com"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173","https://instinc.onrender.com"], credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,9 +32,9 @@ mongoose.connect(URI, {
 });
 
 // Define routes
-app.use("/api/user", userRoute);
-app.use("/api/post", postRoute);
-app.use("/api/message", messageRoute);
+app.use("/user", userRoute);
+app.use("/post", postRoute);
+app.use("/message", messageRoute);
 
 // Start the server
 server.listen(PORT, () => {

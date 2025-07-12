@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const LikeButton = ({ postId, userId, initialLikes, initiallyLiked }) => {
   const [likes, setLikes] = useState(initialLikes);
@@ -9,7 +10,7 @@ const LikeButton = ({ postId, userId, initialLikes, initiallyLiked }) => {
 
   const handleLikeToggle = async () => {
     try {
-      const response = await axios.post('/api/post/toggleLike', {
+      const response = await axios.post(`${API_BASE_URL}/post/toggleLike`, {
         postId,
         userId
       });

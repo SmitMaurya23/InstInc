@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 function ShowUser() {
   const [userData, setUserData] = useState(null);
   const selfUser = JSON.parse(localStorage.getItem("selfUser"));
@@ -9,8 +12,8 @@ function ShowUser() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.post("/api/user/showData", { userId: selfUser._id });
-        const otherUsers = await axios.get("/api/user/allUsers", { userId: selfUser._id });
+        const response = await axios.post(`${API_BASE_URL}/user/showData`, { userId: selfUser._id });
+        const otherUsers = await axios.get(`${API_BASE_URL}/user/allUsers`, { userId: selfUser._id });
         console.log("other users are: ", otherUsers);
 
         setUserData(response.data.user);

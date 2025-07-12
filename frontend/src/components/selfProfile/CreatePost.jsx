@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FiAlertCircle, FiUploadCloud, FiX, FiLoader } from 'react-icons/fi';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const CreatePost = ({ onClose }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -38,7 +39,7 @@ const CreatePost = ({ onClose }) => {
       formData.append('description', data.description);
       formData.append('author', selfUser._id);
 
-      await axios.post("/api/post/createPost", formData, {
+      await axios.post(`${API_BASE_URL}/post/createPost`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

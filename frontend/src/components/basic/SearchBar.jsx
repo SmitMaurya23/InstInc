@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
@@ -19,7 +19,7 @@ const SearchBar = () => {
     const fetchResults = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`/api/user/search?query=${query}`);
+        const response = await axios.get(`${API_BASE_URL}/user/search?query=${query}`);
         setResults(response.data);
       } catch (error) {
         console.error('Error fetching search results:', error);
