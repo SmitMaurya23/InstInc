@@ -12,7 +12,6 @@
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.8",
-    "backend": "file:..",
     "bookstore": "file:..",
     "bootstrap-icons": "^1.11.3",
     "js-cookie": "^3.0.5",

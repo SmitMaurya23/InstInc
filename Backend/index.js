@@ -7,43 +7,36 @@ import postRoute from "./routes/post.route.js";
 import messageRoute from "./routes/message.route.js";
 import { app, server } from "./SocketIO/server.js";
 import cookieParser from "cookie-parser";
-import path from "path";
 
 // Load environment variables
 dotenv.config();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4001;
 const URI = process.env.MongoDBURI;
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:3001","https://instinc.onrender.com"], credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB
+// Connect to MongoDB with proper error handling
 mongoose.connect(URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 .then(() => console.log("Connected to MongoDB"))
-.catch(error => console.log("Error: ", error));
+.catch(error => {
+  console.error("Error connecting to MongoDB:", error);
+  process.exit(1);
+});
 
 // Define routes
-app.use("/api/user", userRoute); //Must to write /api/user it will not work in for two separate folders
+app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 app.use("/api/message", messageRoute);
 
-if (process.env.NODE_ENV === "production") {
-    const dirPath = path.resolve();
-    app.use(express.static("./frontend/dist"));
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(dirPath,"./frontend/dist", "index.html"));
-    });
-}
-
-
 // Start the server
 server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
 });
