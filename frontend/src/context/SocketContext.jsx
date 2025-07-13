@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
 const socketContext = createContext();
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 
 // it is a hook.
 export const useSocketContext = () => {
@@ -17,7 +19,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://instinc.onrender.com", {
+      const socket = io(API_BASE_URL, {
         query: {
           userId: authUser._id,
         },
