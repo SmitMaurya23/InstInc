@@ -11,11 +11,12 @@ import cookieParser from "cookie-parser";
 // Load environment variables
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4001;
 const URI = process.env.MongoDBURI;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // Middleware
-app.use(cors({ origin: "https://instinc.onrender.com", credentials: true }));
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

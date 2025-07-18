@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -17,7 +17,7 @@ const Feed = () => {
   const fetchPosts = useCallback(async () => {
     try {
       if (selfUser) {
-        const response = await axios.post(`${API_BASE_URL}/post/getAllPosts`, { userId: selfUser._id });
+        const response = await axios.post(`${BACKEND_URL}/post/getAllPosts`, { userId: selfUser._id });
         setPosts(response.data.posts);
       }
     } catch (error) {

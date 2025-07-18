@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const OtherFeed = ({ userId }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const OtherFeed = ({ userId }) => {
   const fetchPosts = useCallback(async () => {
     try {
       if (userId) {
-        const response = await axios.post(`${API_BASE_URL}/post/getUserPosts`, { userId });
+        const response = await axios.post(`${BACKEND_URL}/post/getUserPosts`, { userId });
         setPosts(response.data.posts);
       }
     } catch (error) {

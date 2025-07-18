@@ -4,8 +4,7 @@ import Footer from '../basic/Footer';
 import OtherFeed from "./OtherFeed";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 function OtherProfile() {
   const location = useLocation();
   const { userId } = location.state || {}; 
@@ -16,7 +15,7 @@ function OtherProfile() {
   const fetchUser = useCallback(async () => {
     try {
       console.log("user id is: ", userId);
-      const response = await axios.post(`${API_BASE_URL}/user/showData`, { userId });
+      const response = await axios.post(`${BACKEND_URL}/user/showData`, { userId });
       setUser(response.data.user);
       setPosts(response.data.user.posts);
     } catch (error) {

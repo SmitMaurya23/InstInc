@@ -2,15 +2,17 @@ import { Server } from "socket.io";
 import http from "http";
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
 
-
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const app = express();
+
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://instinc.onrender.com", // Update this to your frontend URL
+    origin: FRONTEND_URL,
     methods: ["GET", "POST"],
   },
 });

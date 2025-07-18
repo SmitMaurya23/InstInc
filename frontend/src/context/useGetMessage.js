@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useConversation from "../../zustand/useConversation.js";
 import axios from "axios";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const useGetMessage = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,8 @@ const useGetMessage = () => {
 
        try {
           const res = await axios.get(
-            `${API_BASE_URL}/message/get/${selectedConversation._id}`
+            `${BACKEND_URL}/message/get/${selectedConversation._id}`,
+            { withCredentials: true }
           );
           console.log("res is: ",res);
           setMessage(res.data);

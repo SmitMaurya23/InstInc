@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import useConversation from "../../zustand/useConversation.js";
 import axios from "axios";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
@@ -11,8 +10,9 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${API_BASE_URL}/message/send/${selectedConversation._id}`,
-        { message }
+        `${BACKEND_URL}/message/send/${selectedConversation._id}`,
+          { message },
+          {withCredentials: true}
       );
       setMessage([...messages, res.data]);
       setLoading(false);

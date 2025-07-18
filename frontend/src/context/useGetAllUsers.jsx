@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie"; // You might not even need this import anymore if not reading non-HttpOnly cookies
 import axios from "axios";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function useGetAllUsers() {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getUsers = async () => {
       setLoading(true);
       try {
-        const token = Cookies.get("jwt");
-        const response = await axios.get(`${API_BASE_URL}/user/allUsers`, {
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await axios.get(`${BACKEND_URL}/user/allUsers`, {
+          withCredentials: true, // Ensure cookies are sent with the request
         });
         setAllUsers(response.data);
         setLoading(false);
       } catch (error) {
-        console.log("Error in useGetAllUsers: " + error);
+        console.error("Error in useGetAllUsers:", error);
+        setLoading(false);
       }
     };
     getUsers();

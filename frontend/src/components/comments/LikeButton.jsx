@@ -2,15 +2,14 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const LikeButton = ({ postId, userId, initialLikes, initiallyLiked }) => {
   const [likes, setLikes] = useState(initialLikes);
   const [liked, setLiked] = useState(initiallyLiked);
 
   const handleLikeToggle = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/post/toggleLike`, {
+      const response = await axios.post(`${BACKEND_URL}/post/toggleLike`, {
         postId,
         userId
       });
