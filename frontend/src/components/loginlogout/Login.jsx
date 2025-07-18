@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthProvider";
 import { FiAlertCircle } from "react-icons/fi";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+
+
 const Login = ({ onClose }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();

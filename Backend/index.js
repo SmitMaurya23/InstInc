@@ -20,6 +20,7 @@ app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', 1);
 
 // Connect to MongoDB with proper error handling
 mongoose.connect(URI, {

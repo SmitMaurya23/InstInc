@@ -6,8 +6,9 @@ const createTokenAndSaveCookie=(userId,res)=>{
     });
     res.cookie("jwt",token,{
         httpOnly:true, //save from xss attack
-        secure:true,
-        sameSite:"strict"  //csrf attack save
+        secure: true,        // Must be true for SameSite=None
+        sameSite: 'None',    // Allows cross-site cookie sending ONLY FOR PRODUCTION FOR LOCAL USE STRICT
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000) // 1 day expiry
     });
 }
 export default createTokenAndSaveCookie;
