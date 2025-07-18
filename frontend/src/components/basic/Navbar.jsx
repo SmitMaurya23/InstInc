@@ -27,13 +27,13 @@ function Navbar() {
   const navItems = (
     <>
       <li>
-        <a href="/" className="hover:text-gray-300">Home</a>
+        <Link to="/" className="hover:text-gray-300">Home</Link>
       </li>
       <li>
-        <a href="/Feed" onClick={handleAuthClick} className="hover:text-gray-300">Feed</a>
+        <Link to="/Feed" onClick={handleAuthClick} className="hover:text-gray-300">Feed</Link>
       </li>
       <li>
-        <a href="/ChatPage" onClick={handleAuthClick} className="hover:text-gray-300">Chat</a>
+        <Link to="/ChatPage" onClick={handleAuthClick} className="hover:text-gray-300">Chat</Link>
       </li>
     </>
   );
