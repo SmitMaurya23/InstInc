@@ -23,11 +23,8 @@ Inst'Inc is a modern, scalable social media platform built using the MERN stack 
 Inst'Inc follows a **client-server architecture** with the following layers:
 
 ```
-Frontend (React.js)  <---->  Backend API (Express.js & Node.js)  <---->  Database (MongoDB)
-                                       |
-                                       +---> Cloudinary (Image Storage)
-                                       |
-                                       +---> WebSockets (Real-time chat)
+<img width="962" height="539" alt="image" src="https://github.com/user-attachments/assets/cdf7f9e0-6024-4676-833c-7e6cb0281e1b" />
+
 ```
 
 * **Frontend (React.js):** User interface, routing, and dynamic components.
